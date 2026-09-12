@@ -94,13 +94,14 @@ Codex phải:
 1. Kiểm tra `git status`.
 2. Đọc `AGENTS.md`.
 3. Đọc instruction gần phạm vi file đang xử lý.
-4. Đọc SDD index/status nếu tồn tại.
-5. Đọc Specification liên quan.
-6. Đọc Planning/Design liên quan.
-7. Đọc đầy đủ task hiện tại.
-8. Đọc test definition / acceptance criteria liên quan.
-9. Kiểm tra dependency của task.
-10. Inspect implementation hiện tại trước khi sửa.
+4. Đọc `docs/ai/RULES_INDEX.md`, sau đó chỉ đọc các engineering rule file liên quan được định tuyến tại đó.
+5. Đọc SDD index/status nếu tồn tại.
+6. Đọc Specification liên quan.
+7. Đọc Planning/Design liên quan.
+8. Đọc đầy đủ task hiện tại.
+9. Đọc test definition / acceptance criteria liên quan.
+10. Kiểm tra dependency của task.
+11. Inspect implementation hiện tại trước khi sửa.
 
 Không sửa file trước khi hiểu đầy đủ scope.
 

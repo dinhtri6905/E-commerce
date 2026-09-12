@@ -1,0 +1,157 @@
+# Allow only repository inspection commands that do not change state.
+prefix_rule(
+    pattern = ["git", "status"],
+    decision = "allow",
+    justification = "Read-only inspection of repository state.",
+    match = [
+        "git status",
+        "git status --short --branch",
+    ],
+    not_match = [
+        "git diff",
+    ],
+)
+
+prefix_rule(
+    pattern = ["git", "diff"],
+    decision = "allow",
+    justification = "Read-only inspection of repository changes.",
+    match = [
+        "git diff",
+        "git diff --staged",
+        "git diff HEAD -- README.md",
+    ],
+    not_match = [
+        "git status",
+    ],
+)
+
+prefix_rule(
+    pattern = ["git", "log"],
+    decision = "allow",
+    justification = "Read-only inspection of repository history.",
+    match = [
+        "git log",
+        "git log --oneline --max-count 10",
+    ],
+    not_match = [
+        "git show HEAD",
+    ],
+)
+
+# Require approval before changing the index, worktree, refs, or history.
+prefix_rule(
+    pattern = [
+        "git",
+        [
+            "add",
+            "commit",
+            "checkout",
+            "switch",
+            "restore",
+            "merge",
+            "rebase",
+            "cherry-pick",
+            "revert",
+            "stash",
+            "branch",
+            "tag",
+        ],
+    ],
+    decision = "prompt",
+    justification = "This command can change the index, worktree, refs, or Git history and requires user approval.",
+    match = [
+        "git add README.md",
+        "git commit -m update",
+        "git switch feature/cart",
+        "git rebase main",
+    ],
+    not_match = [
+        "git status",
+        "git diff --staged",
+        "git push origin main",
+    ],
+)
+
+# Require approval before commands that contact a remote or update remote-tracking refs.
+prefix_rule(
+    pattern = ["git", ["fetch", "pull", "push"]],
+    decision = "prompt",
+    justification = "This command contacts a remote and may update local or remote refs, so it requires user approval.",
+    match = [
+        "git fetch origin",
+        "git pull --ff-only",
+        "git push origin main",
+    ],
+    not_match = [
+        "git status",
+        "git commit -m update",
+    ],
+)
+
+# Block destructive operations prohibited by repository governance.
+prefix_rule(
+    pattern = ["git", "reset", "--hard"],
+    decision = "forbidden",
+    justification = "Hard reset can irreversibly discard worktree and index changes; inspect with git status and git diff instead.",
+    match = [
+        "git reset --hard",
+        "git reset --hard HEAD~1",
+    ],
+    not_match = [
+        "git reset HEAD README.md",
+    ],
+)
+
+prefix_rule(
+    pattern = ["git", "clean"],
+    decision = "forbidden",
+    justification = "Git clean can permanently delete untracked files; inspect untracked files with git status instead.",
+    match = [
+        "git clean -fd",
+        "git clean -fdx",
+    ],
+    not_match = [
+        "git status --short",
+    ],
+)
+
+prefix_rule(
+    pattern = ["git", "push", ["-f", "--force", "--force-with-lease"]],
+    decision = "forbidden",
+    justification = "Force pushing rewrites remote history; use a normal git push after reconciling history.",
+    match = [
+        "git push -f origin main",
+        "git push --force origin main",
+        "git push --force-with-lease origin main",
+    ],
+    not_match = [
+        "git push origin main",
+    ],
+)
+
+prefix_rule(
+    pattern = ["git", "branch", ["-d", "-D", "--delete"]],
+    decision = "forbidden",
+    justification = "Deleting branches is prohibited by repository governance; keep the branch or request an explicit policy change.",
+    match = [
+        "git branch -d feature/cart",
+        "git branch -D feature/cart",
+        "git branch --delete feature/cart",
+    ],
+    not_match = [
+        "git branch feature/cart",
+    ],
+)
+
+prefix_rule(
+    pattern = ["git", "checkout", "--"],
+    decision = "forbidden",
+    justification = "Checking out paths from the index can discard user changes; inspect with git diff and preserve the changes instead.",
+    match = [
+        "git checkout -- README.md",
+    ],
+    not_match = [
+        "git checkout feature/cart",
+    ],
+)

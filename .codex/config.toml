@@ -1,0 +1,39 @@
+[agents]
+enabled = true
+max_concurrent_threads_per_session = 4
+
+[agents.ba]
+description = "Phân tích yêu cầu nghiệp vụ và chất lượng Specification."
+config_file = "agents/ba.toml"
+
+[agents.architect]
+description = "Thiết kế kiến trúc kỹ thuật và Planning sẵn sàng cho implementation."
+config_file = "agents/architect.toml"
+
+[agents.database_engineer]
+description = "Thiết kế database và bảo đảm tính đúng đắn của persistence."
+config_file = "agents/database-engineer.toml"
+
+[agents.backend_dev]
+description = "Triển khai backend theo đúng SDD task đã được phê duyệt."
+config_file = "agents/backend-dev.toml"
+
+[agents.frontend_dev]
+description = "Triển khai frontend theo đúng SDD task và UI pattern hiện có."
+config_file = "agents/frontend-dev.toml"
+
+[agents.qa]
+description = "Kiểm chứng độc lập implementation và Acceptance Criteria."
+config_file = "agents/qa.toml"
+
+[agents.security_reviewer]
+description = "Review security độc lập, ưu tiên bằng chứng và hành vi read-only."
+config_file = "agents/security-reviewer.toml"
+
+[agents.reviewer]
+description = "Review độc lập correctness, scope, regression và test sufficiency."
+config_file = "agents/reviewer.toml"
+
+[agents.devops]
+description = "Xác minh build, deployment, vận hành và khả năng rollback."
+config_file = "agents/devops.toml"
