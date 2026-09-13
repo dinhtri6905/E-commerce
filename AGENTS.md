@@ -87,21 +87,22 @@ Chỉ chuyển sang phase tiếp theo khi gate hiện tại đạt `PASS` hoặc
 
 ---
 
-## 6. Trước khi thay đổi code
+## 6. Trước khi thực hiện task
 
 Codex phải:
 
 1. Kiểm tra `git status`.
 2. Đọc `AGENTS.md`.
 3. Đọc instruction gần phạm vi file đang xử lý.
-4. Đọc `docs/ai/RULES_INDEX.md`, sau đó chỉ đọc các engineering rule file liên quan được định tuyến tại đó.
-5. Đọc SDD index/status nếu tồn tại.
-6. Đọc Specification liên quan.
-7. Đọc Planning/Design liên quan.
-8. Đọc đầy đủ task hiện tại.
-9. Đọc test definition / acceptance criteria liên quan.
-10. Kiểm tra dependency của task.
-11. Inspect implementation hiện tại trước khi sửa.
+4. Đọc `docs/project/INDEX.md` và các tài liệu dự án liên quan theo thứ tự tại đó.
+5. Đọc `docs/ai/RULES_INDEX.md`, sau đó chỉ đọc các engineering rule file liên quan được định tuyến tại đó.
+6. Đọc `docs/sdd/index.md` và SDD status nếu các artifact này tồn tại.
+7. Đọc Specification liên quan.
+8. Đọc Planning/Design liên quan.
+9. Đọc đầy đủ task hiện tại.
+10. Đọc test definition / acceptance criteria liên quan.
+11. Kiểm tra dependency của task.
+12. Inspect implementation hiện tại trước khi sửa.
 
 Không sửa file trước khi hiểu đầy đủ scope.
 
